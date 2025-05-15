@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../static/media/title.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+  <link href="../static/css/main_style.css" rel="stylesheet">
+  <title>پنل اصلی چارت دروس</title>
+</head>
+<body>
+  <header>
+    <h1>پنل اصلی چارت دروس</h1>
+  </header>
+
+  <div class="container">
+    <!-- نویگیشن بار -->
+    <nav>
+      {% if student_name %}
+        <a href="/logout">
+          <button>خروج</button>
+        </a>
+        <button>پیام به مدیر گروه</button>
+        <p><span class="welcome">سلام </span>{{ student_name }}<spanid="student_name"></span></p>
+      {% else %}
+        <a href="/login">
+          <button>ورود / ثبت نام</button>
+        </a>
+      {% endif %}
+    </nav>
+
+    <!-- جدول زمانبندی روزانه -->
+    <table class="schedule-table" border="1">
+      <thead>
+        <tr>
+          <th>روزها</th>
+          <th>گروه</th>
+          <th>08:00 08:30</th>
+          <th>08:30 09:00</th>
+          <th>09:00 09:30</th>
+          <th>09:30 10:00</th>
+          <th>10:00 10:30</th>
+          <th>10:30 11:00</th>
+          <th>11:00 11:30</th>
+          <th>11:30 12:00</th>
+          <th>12:00 12:30</th>
+          <th>12:30 13:00</th>
+          <th>13:00 13:30</th>
+          <th>13:30 14:00</th>
+          <th>14:00 14:30</th>
+          <th>14:30 15:00</th>
+          <th>15:00 15:30</th>
+          <th>15:30 16:00</th>
+          <th>16:00 16:30</th>
+          <th>16:30 17:00</th>
+          <th>17:00 17:30</th>
+          <th>17:30 18:00</th>
+        </tr>
+      </thead>
+      <tbody>
+        <script>
+          const days = ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه"];
+          const groups = ["1400", "1401", "1402", "1403"];
+
+          days.forEach((day, dayIndex) => {
+            document.write(`<tr>`);
+            document.write(`<td rowspan="4">${day}</td>`); 
+            
+            groups.forEach((group, groupIndex) => {
+              if (groupIndex > 0) document.write(`<tr>`); 
+              document.write(`<td>${group}</td>`);
+
+              for (let i = 8; i < 18; i += 0.5) {
+                let startHour = Math.floor(i);
+                let startMin = i % 1 === 0 ? "00" : "30";
+                let endHour = startMin === "00" ? startHour : startHour + 1;
+                let endMin = startMin === "00" ? "30" : "00";
+                let timeId = `day${dayIndex}-group${groupIndex}-${startHour}:${startMin}-${endHour}:${endMin}`;
+                document.write(`<td class="time-block" id="${timeId}"></td>`);
+              }
+
+              document.write(`</tr>`);
+            });
+          });
+        </script>
+      </tbody>
+    </table>
+
+    <!-- تغییرات اخیر -->
+    <div class="add-teacher-box">
+        <h3>تغییرات اخیر</h3>
+        <div class="message-box">
+            <p>تداخل دروس ریاضی 1 و فیزیک برطرف شده است.</p>
+        </div>
+        <div class="message-box">
+            <p>تداخل امتحان ریاضیات مهندسی و معماری کامپیوتر برطرف شده است.</p>
+        </div>
+    </div>
+    
+    <!-- پیام‌ها -->
+    {% if student_name %}
+      <div class="chat-container" id="chatContainer" style="display: block;">
+          <div class="chat-header">چت دانشجویی ({{ student_name }})</div>
+          <div class="chat-box" id="chatBox">
+              <!-- پیام‌ها اینجا اضافه می‌شوند -->
+          </div>
+          <div class="chat-input">
+              <input type="text" id="messageInput" placeholder="پیام خود را بنویسید...">
+              <button onclick="sendMessages()">ارسال</button>
+          </div>
+      </div>
+    {% else %}
+      <div class="chat-warning">
+          <p>⚠ برای ورود به چت باکس باید وارد سایت شوید ⚠</p>
+      </div>
+    {% endif %}
+  </div>
+</body>
+<script>
+  let studentName = "{{ student_name }}";
+</script>
+<script src="../static/js/main_script.js"></script>
+</html>

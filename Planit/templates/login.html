@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/media/title.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+    <title>ورود به حساب کاربری</title>
+    <style>
+        body {
+            background-img: linear-gradient(to bottom,rgb(255, 255, 255), #00aaff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #ffffff; 
+            font-family: 'Vazir', sans-serif; 
+        }
+        .container {
+            max-width: 400px;
+        }
+        .container-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .image-container {
+            margin-right: -10px;
+            z-index: 1;
+        }
+        .image-container img {
+            max-width: 350px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .card {
+            background: rgba(0, 0, 0, 0.7); 
+            border: none; 
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .card-header-tabs {
+            display: flex;
+            justify-content: space-around; 
+            padding: 0;
+            margin: 0; 
+        }
+        .card-header {
+            display: flex;
+            align-items: center; 
+        }
+        .card-header-tabs .nav-item {
+            flex: 1; 
+            text-align: center;
+            margin: 0;
+        }
+        .card-header-tabs .nav-link {
+            color: #ffffff; 
+            font-size: 15px;
+            width: 150px;
+        }
+        .card-header-tabs .nav-link.active {
+            color: #00aaff; 
+        }
+        .card-header-tabs .nav-link:hover {
+            color: #00aaff; 
+        }
+        .mt-3.text-center a {
+            color: #00aaff;
+        }
+        .mt-3.text-center p {
+            color: white;
+        }
+        h2 {
+            text-align: center;
+            color: #00aaff; 
+        }
+        .form-label {
+            color: #00aaff; 
+        }
+        .form-group {
+            text-align: right;
+            position: relative;
+        }
+        .form-group img {
+            position: absolute;
+            left: 10px;
+            top: 36px;
+            width: 24px;
+            height: 24px;
+        }
+        .form-control {
+            padding-left: 50px;
+        }
+        .form-check-input {
+            appearance: none;
+            width: 17px;
+            height: 17px;
+            border: 2px solid #00aaff; 
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            background-color: transparent;
+        }
+        .form-check-label {
+            margin-left: 6px;
+            display: inline-block;
+            line-height: 0.3;
+            color: white;
+        }
+        .btn-primary {
+            background-color: #00aaff; 
+            border-color: #00aaff;
+        }
+        .btn-primary:hover {
+            background-color: #0088cc; 
+            border-color: #0088cc;
+        }
+        .btn-container {
+            text-align: left;
+        }
+        .text-center a {
+            color: #00aaff;
+            text-decoration: none;
+        }
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+        .text-white { 
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-wrapper">
+        <div class="card">
+            {% if error %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <h2>ورود به حساب کاربری</h2>
+            <div class="card-body">
+                <div class="card mx-auto">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="student-tab" data-bs-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="true">دانشجو</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">ادمین</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+                            <!-- فرم ورود دانشجو -->
+                            <div class="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab">
+                                <form method="post">
+                                    <input type="hidden" name="user_type" value="student"> <!-- اضافه کردن نوع کاربر -->
+                                    <div class="mb-3 form-group">
+                                        <label for="student_id" class="form-label">شماره دانشجویی</label>
+                                        <input type="text" class="form-control" id="student_id" name="student_or_admin" required>
+                                        <img src="{{ url_for('static', filename='media/icons/contact.png') }}" alt="Student Icon">
+                                    </div>
+                                    <div class="mb-3 form-group">
+                                        <label for="student_password" class="form-label">رمز عبور</label>
+                                        <input type="password" class="form-control" id="student_password" name="password" required autocomplete="off">
+                                        <img src="{{ url_for('static', filename='media/icons/password.png') }}" alt="Password Icon">
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-primary px-4">ورود</button>
+                                    </div>
+                                </form>
+                            </div>
+    
+                            <!-- فرم ورود ادمین -->
+                            <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
+                                <form method="post">
+                                    <input type="hidden" name="user_type" value="admin"> <!-- اضافه کردن نوع کاربر -->
+                                    <div class="mb-3 form-group">
+                                        <label for="admin_id" class="form-label">نام کاربری</label>
+                                        <input type="text" class="form-control" id="admin_id" name="student_or_admin" required>
+                                        <img src="{{ url_for('static', filename='media/icons/contact.png') }}" alt="Admin Icon">
+                                    </div>
+                                    <div class="mb-3 form-group">
+                                        <label for="admin_password" class="form-label">رمز عبور</label>
+                                        <input type="password" class="form-control" id="admin_password" name="password" required autocomplete="off">
+                                        <img src="{{ url_for('static', filename='media/icons/password.png') }}" alt="Password Icon">
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-primary px-4">ورود</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 text-center">
+                    <p>حساب کاربری ندارید؟ <a href="{{ url_for('signup') }}">ایجاد حساب کاربری جدید</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

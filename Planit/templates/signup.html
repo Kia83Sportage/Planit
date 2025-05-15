@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/media/title.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+    <title>ایجاد حساب کاربری</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #004d88, #00aaff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #ffffff; 
+            font-family: 'Vazir', sans-serif; 
+        }
+        .container {
+            max-width: 400px;
+        }
+        .container-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .card {
+            background: rgba(0, 0, 0, 0.7); 
+            border: none; 
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        h2 {
+            text-align: center;
+            color: #00aaff; 
+        }
+        .form-label {
+            color: #00aaff; 
+        }
+        .form-group {
+            text-align: right;
+            position: relative;
+        }
+        .form-group img {
+            position: absolute;
+            left: 10px;
+            top: 36px;
+            width: 24px;
+            height: 24px;
+        }
+        .form-control {
+            padding-left: 50px;
+        }
+        .btn-primary {
+            background-color: #00aaff; 
+            border-color: #00aaff;
+        }
+        .btn-primary:hover {
+            background-color: #0088cc; 
+            border-color: #0088cc;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .text-center a {
+            color: #00aaff;
+            text-decoration: none;
+        }
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+        .text-white { 
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-wrapper">
+        <div class="card">
+            {% if error %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <h2>ثبت نام دانشجو</h2>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3 form-group">
+                        <label for="number" class="form-label">شماره دانشجویی</label>
+                        <input type="text" class="form-control" id="number" name="number" required>
+                        <img src="../static/media/icons/contact.png" alt="number Icon">
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label for="password" class="form-label">رمز عبور</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <img src="../static/media/icons/password.png" alt="Password Icon">
+                    </div>
+                    <div class="mb-3 form-group">
+                        <label for="confirm-password" class="form-label">تأیید رمز عبور</label>
+                        <input type="password" class="form-control" id="confirm-password" name="confirm_password" required>
+                        <img src="../static/media/icons/password.png" alt="Password Icon">
+                    </div>
+                    <div class="btn-container">
+                        <button type="submit" class="btn btn-primary">ثبت نام</button>
+                        <a href="/login">
+                            <button class="btn btn-primary ms-5">برگشت به ورود</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

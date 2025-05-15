@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="../static/media/title.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+  <link href="../static/css/admin_style.css" rel="stylesheet">
+  <title>پنل مدیریت چارت دروس</title>
+</head>
+<body>
+  <header>
+    <h1>پنل مدیریت چارت دروس</h1>
+  </header>
+
+  <div class="container">
+    <!-- نویگیشن بار -->
+    <nav>
+      {% if admin_name %}
+        <a href="/logout">
+          <button>خروج</button>
+        </a>
+        <a href="/main">
+          <button>صفحه اصلی</button>
+        </a>
+        <button onclick="switchTab('schedule')">جدول کلاس‌ها</button>
+        <button onclick="switchTab('examination')">جدول امتحانات</button>
+        <button onclick="switchTab('confliction')">تداخلات و پیام‌ها</button>
+        <p><span class="welcome">سلام جناب دکتر </span>{{ admin_name }}<spanid="admin_name"></span></p>
+      {% else %}
+        <button onclick="switchTab('schedule')">جدول کلاس‌ها</button>
+        <button onclick="switchTab('examination')">جدول امتحانات</button>
+        <button onclick="switchTab('confliction')">تداخلات و پیام‌ها</button>
+      {% endif %}
+    </nav>
+
+    <!-- برنامه دروس -->
+    <div id="schedule" class="tab-content active">
+      <!-- جدول دروس -->
+      <table class="schedule-table" border="1">
+        <thead>
+          <tr>
+            <th>روزها</th>
+            <th>گروه</th>
+            <th>08:00 08:30</th>
+            <th>08:30 09:00</th>
+            <th>09:00 09:30</th>
+            <th>09:30 10:00</th>
+            <th>10:00 10:30</th>
+            <th>10:30 11:00</th>
+            <th>11:00 11:30</th>
+            <th>11:30 12:00</th>
+            <th>12:00 12:30</th>
+            <th>12:30 13:00</th>
+            <th>13:00 13:30</th>
+            <th>13:30 14:00</th>
+            <th>14:00 14:30</th>
+            <th>14:30 15:00</th>
+            <th>15:00 15:30</th>
+            <th>15:30 16:00</th>
+            <th>16:00 16:30</th>
+            <th>16:30 17:00</th>
+            <th>17:00 17:30</th>
+            <th>17:30 18:00</th>
+          </tr>
+        </thead>
+        <tbody>
+          <script>
+            const days = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه"];
+            const groups = ["1400", "1401", "1402", "1403"];
+
+            days.forEach((day, dayIndex) => {
+              document.write(`<tr>`);
+              document.write(`<td rowspan="4">${day}</td>`); 
+              
+              groups.forEach((group, groupIndex) => {
+                if (groupIndex > 0) document.write(`<tr>`); 
+                document.write(`<td>${group}</td>`);
+
+                for (let i = 8; i < 18; i += 0.5) {
+                  let startHour = Math.floor(i);
+                  let startMin = i % 1 === 0 ? "00" : "30";
+                  let endHour = startMin === "00" ? startHour : startHour + 1;
+                  let endMin = startMin === "00" ? "30" : "00";
+                  let timeId = `day${dayIndex}-group${groupIndex}-${startHour}:${startMin}-${endHour}:${endMin}`;
+                  document.write(`<td class="time-block" id="${timeId}"></td>`);
+                }
+
+                document.write(`</tr>`);
+              });
+            });
+          </script>
+        </tbody>
+      </table>
+
+      <!-- بخش اضافه کردن درس -->
+      <div class="add-teacher-box">
+        <h3>اضافه کردن درس</h3>
+        <div class="form-section">
+          <div>
+            <!-- زمان آزاد استاد -->
+            <div>
+              <label for="availability">:زمان آزاد استاد</label>
+              <input type="text" id="availability" class="time-box" placeholder="روزهای آزاد استاد را وارد کنید">
+            </div>
+            <!-- سال ورودی -->
+            <div>
+              <label for="year">:سال ورودی</label>
+              <input type="number" id="year" class="time-box" placeholder="سال ورودی را وارد کنید" step="1" required>
+            </div>
+          </div>
+          <div>
+            <!-- استاد -->
+            <div>
+              <label for="teacher">:نام استاد</label>
+              <input type="text" id="teacher" placeholder="نام استاد را وارد کنید">
+            </div>
+            <!-- مدت کلاس -->
+            <div>
+              <label for="length">:مدت کلاس</label>
+              <input type="number" id="length" class="time-box" placeholder="مدت کلاس را وارد کنید" step="0.5" required>
+            </div>
+          </div>
+          <div>
+            <!-- درس -->
+            <div>
+              <label for="subject">:نام درس</label>
+              <input type="text" id="subject" placeholder="نام درس را وارد کنید">
+            </div>
+            <!-- تعداد روز ارائه درس -->
+            <div>
+              <label for="days">:تعداد روز ارائه</label>
+              <input type="number" id="days" class="time-box" placeholder="تعداد روز را وارد کنید" step="1" required>
+            </div>
+          </div>
+        </div>
+        <div class="button-container" onclick="addCourse()">
+          <button>اضافه کردن درس</button>
+        </div>
+
+        <!-- جدول اساتید و دروس -->
+        <table id="courses-table">
+          <thead>
+            <tr>
+              <th>عملیات</th>
+              <th>سال ورودی</th>
+              <th>مدت کلاس</th>
+              <th>تعداد روز ارائه</th>
+              <th>زمان آزاد استاد</th>
+              <th>نام استاد</th>
+              <th>نام درس</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <button onclick="deleteRow(this)">
+                  <img src="../static/media/icons/delete.png" alt="حذف" width="20">
+                </button>
+              </td>
+              <!-- درس ها اینجا اضافه می‌شوند -->
+            </tr>
+          </tbody>
+        </table>
+        <div class="button-container">
+          <button onclick="saveCourses()">ذخیره تغییرات</button>
+        </div>
+      </div>
+
+      <!-- ساختن برنامه -->
+      <div class="button-finish">
+        <button id="generate-schedule" onclick="generateSchedule()">ساختن برنامه دروس</button>
+      </div>
+    </div>
+
+    <!-- برنامه امتحانات -->
+    <div id="examination" class="tab-content">
+      <!-- جدول امتحانات -->
+      <table class="examination-table" border="1">
+        <thead>
+            <tr>
+                <th>روز هفته</th>
+                <th>تاریخ امتحان</th>
+                <th>ساعت امتحان</th>
+                <th>ورودی</th>
+                <th>نام استاد</th>
+                <th>نوع درس</th>
+                <th>اسم درس</th>
+            </tr>
+        </thead>
+        <tbody>
+            <script>
+              function getExamDates() {
+                let examDays = [];
+                let today = new Date();
+            
+                for (let i = 0; i < 14; i++) {  
+                    let date = new Date();
+                    date.setDate(today.getDate() + i);
+            
+                    let dayOfWeek = date.toLocaleDateString('fa-IR', { weekday: 'long' });
+            
+                    if (dayOfWeek !== "جمعه") {
+                        let parts = date.toLocaleDateString('fa-IR').split("/");
+            
+                        let formattedDate = `${parts[0]}/${String(parts[1]).padStart(2, "0")}/${String(parts[2]).padStart(2, "0")}`;
+            
+                        formattedDate = formattedDate.replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+            
+                        examDays.push({ day: dayOfWeek, date: formattedDate });
+                    }
+                }
+                return examDays;
+              }
+              
+              const examTimes = ["09:00-11:00", "09:00-11:00", "13:30-15:30", "13:30-15:30"];
+              const entries = ["1400", "1401", "1402", "1403"];
+              
+              let examDays = getExamDates();
+              
+              examDays.forEach(({ day, date }) => {
+                  document.write(`<tr>`);
+                  document.write(`<td rowspan="4">${day}</td>`);
+                  document.write(`<td rowspan="4">${date}</td>`);
+              
+                  examTimes.forEach((time, index) => {
+                      if (index > 0) document.write(`<tr>`);
+                      document.write(`<td>${time}</td>`);
+                      document.write(`<td></td>`); 
+                      document.write(`<td></td>`); 
+                      document.write(`<td></td>`); 
+                      document.write(`<td></td>`); 
+                      document.write(`</tr>`);
+                  });
+              });
+            </script>
+        </tbody>
+      </table>
+
+      <!-- بخش اضافه کردن امتحان -->
+      <div class="add-teacher-box">
+        <h3>اضافه کردن امتحان</h3>
+        <div class="form-section">
+            <!-- سال ورودی -->
+            <div>
+              <label for="exam-year">:سال ورودی</label>
+              <input type="number" id="exam-year" class="time-box" placeholder="سال ورودی را وارد کنید" step="1" required>
+            </div>
+            <!-- نام استاد -->
+            <div>
+              <label for="exam-teacher">:نام استاد</label>
+              <input type="text" id="exam-teacher" class="time-box" placeholder="نام استاد را وارد کنید">
+            </div>
+            <!-- نوع درس -->
+            <div>
+              <label for="type">:نوع درس</label>
+              <select id="type" class="time-box">
+                <option value="پایه">پایه</option>
+                <option value="اختصاصی">اختصاصی</option>
+                <option value="اختیاری">اختیاری</option>
+                <option value="عمومی">عمومی</option>
+              </select>
+            </div>
+            <!-- نام درس -->
+            <div>
+              <label for="course">:نام درس</label>
+              <input type="text" id="course" class="time-box" placeholder="نام درس را وارد کنید">
+            </div>
+        </div>
+        <div class="button-container" onclick="addExam()">
+          <button>اضافه کردن امتحان</button>
+        </div>
+
+        <!-- جدول امتحانات -->
+        <table id="exams-table">
+          <thead>
+            <tr>
+              <th>عملیات</th>
+              <th>سال ورودی</th>
+              <th>نام استاد</th>
+              <th>نوع درس</th>
+              <th>نام درس</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <!-- امتحانات اینجا اضافه می‌شوند -->
+            </tr>
+          </tbody>
+        </table>
+        <div class="button-container">
+          <button onclick="saveExams()">ذخیره تغییرات</button>
+        </div>
+      </div>
+
+      <!-- ساختن برنامه -->
+      <div class="button-finish">
+        <button id="generate-examination" onclick="generateExamination()">ساختن برنامه امتحانات</button>
+      </div>
+    </div>
+
+    <!-- تداخلات و پیام‌ها -->
+    <div id="confliction" class="tab-content">
+      <!-- بخش اضافه کردن تداخلات -->
+      <div class="add-teacher-box">
+        <h3>اضافه کردن تداخل</h3>
+        <div class="form-section">
+          <!-- تداخل درس یا امتحان -->
+          <div>
+            <label for="typeSelection">:نوع تداخل</label>
+            <select id="typeSelection" class="time-box">
+                <option value="درس">درس</option>
+                <option value="امتحان">امتحان</option>
+            </select>
+          </div>
+          <!-- درس دوم -->
+          <div>
+            <label for="subject_two">:درس دوم</label>
+            <input type="text" id="subject_two" class="time-box" placeholder="درس دوم را وارد کنید">
+          </div>
+          <!-- درس اول -->
+          <div>
+            <label for="subject_one">:درس اول</label>
+            <input type="text" id="subject_one" class="time-box" placeholder="درس اول را وارد کنید">
+          </div>
+        </div>
+        <div class="button-container" onclick="addConflict()">
+          <button>اضافه کردن تداخل</button>
+        </div>
+
+        <!-- جدول تداخلات -->
+        <table id="conflicts-table">
+          <thead>
+            <tr>
+              <th>عملیات</th>
+              <th>وضعیت برطرف شدن</th>
+              <th>نوع تداخل</th>
+              <th>درس دوم</th>
+              <th>درس اول</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+            </tr>
+          </tbody>
+        </table>
+        <div class="button-container">
+          <button onclick="saveConflicts()">ذخیره تغییرات</button>
+        </div>
+      </div>
+
+      <!-- پیشنهادات برای رفع تداخلات -->
+      <div class="button-finish">
+        <button id="solve-confliction" onclick="solveConfliction()">پیشنهاد برای رفع تداخل</button>
+      </div>
+
+      <!-- پیام‌ها -->
+      <div class="add-teacher-box">
+        <h3>پیام‌های دریافتی</h3>
+        <div class="message-box">
+            <div class="message-title">کیارش زنگویی</div>
+            <p>لطفا به تداخل دروس گفته شده رسیدگی شود.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../static/js/admin_script.js"></script>
+</html>

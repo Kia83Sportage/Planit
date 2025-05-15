@@ -1,0 +1,294 @@
+body {
+    font-family: 'Vazir', sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #0078d4;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+.container {
+    padding: 20px;
+}
+nav {
+    width: 100%;
+    background-color: #005a99;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+nav p {
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    margin-top: 3px;
+    margin-right: 10px;
+    margin-bottom: 0px;
+}
+nav button {
+    background-color: #ffffff;
+    border: none;
+    color: #005a99;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    font-family: 'Vazir', sans-serif;
+    font-weight: bold;
+}
+nav button:hover {
+    background-color: #003d66;
+    color: white;
+}
+.tab-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.tab-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    font-weight: bold;
+}
+.tab-button.active {
+    background-color: #007bff;
+    color: white;
+}
+.tab-content {
+    display: none;
+    margin-top: 20px;
+}
+.tab-content.active {
+    display: block;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+.time-block {
+    height: 30px;
+    background-color: #f9f9f9;
+}
+.add-teacher-box {
+    background-color: #e6f1ff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+.add-teacher-box h3 {
+    background-color: #005a99;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: -20px -20px 20px -20px;
+}
+.form-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+    text-align: right;
+}
+.form-section input, .form-section select, .form-section textarea {
+    width: 80%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    text-align: right;
+    margin-top: 10px;
+    font-family: 'Vazir', sans-serif;
+}
+.form-section label {
+    font-weight: bold;
+    padding: 10px;
+    margin-bottom: 25px;
+}
+.time-box {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+.button-container button {
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Vazir', sans-serif;
+    font-weight: bold;
+}
+.button-container button:hover {
+    background-color: #005a99;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    background-color: white;
+}
+table th {
+    background-color: #0078d4;
+    color: white;
+}
+table button {
+    background: none;  
+    border: none;      
+    gap: 10px;       
+    cursor: pointer;   
+}
+.schedule-table {
+    margin-top: 20px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+.schedule-table th, .schedule-table td {
+    padding: 10px;
+    text-align: center;
+}
+.schedule-table th {
+    background-color: #0078d4;
+    color: white;
+}
+.schedule-table td {
+    border: 1px solid #ccc;
+    height: 25px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.examination-table {
+    margin-top: 20px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+.examination-table th, .examination-table td {
+    padding: 10px;
+    text-align: center;
+}
+.examination-table th {
+    background-color: #0078d4;
+    color: white;
+}
+.examination-table td {
+    border: 1px solid #ccc;
+    height: 25px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.time-block {
+    background-color: #f5f5f5;
+}
+.message-box {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    direction: rtl;
+}
+.message-box {
+    border-left: 5px solid rgba(0, 0, 0, 0.99);
+}
+.message-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.button-finish {
+    display: flex;
+    gap: 200px;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+.button-finish button {
+    background-color: #005a99;
+    color: white;
+    border: none;
+    padding: 10px 80px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Vazir', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+.button-finish button:hover {
+    background-color: #000000;
+}
+.draggable-cell {
+    background-color: #f9f9f9;
+    cursor: grab;
+}
+.dragging {
+    opacity: 0.5;
+}
+.selected-row {
+    border: 2px solid blue;
+    background-color: rgba(255, 234, 0, 0.838);
+}
+
+@media (max-width: 1200px) {
+    .schedule-table {
+      width: 100%;
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .schedule-table th, .schedule-table td {
+      padding: 8px;
+      font-size: 14px;
+    }
+    .examination-table {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .examination-table th, .examination-table td {
+    padding: 8px;
+    font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .schedule-table {
+      font-size: 12px;
+    }
+    .schedule-table th, .schedule-table td {
+      padding: 6px;
+    }
+    .examination-table {
+      font-size: 12px;
+    }
+    .examination-table th, .examination-table td {
+    padding: 6px;
+    }
+}
